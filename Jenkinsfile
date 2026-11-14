@@ -7,6 +7,13 @@ pipeline {
 
     options {
         timestamps()
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        PATH+DOCKER = 'C:\\Users\\jurep\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin'
+        DOCKER_CONFIG = 'C:\\Users\\jurep\\.docker'
+        DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
     }
 
     stages {

@@ -11,7 +11,7 @@ pipeline {
     }
 
     environment {
-        PATH+DOCKER = 'C:\\Users\\jurep\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin'
+        DOCKER_CLI = 'C:\\Users\\jurep\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe'
         DOCKER_CONFIG = 'C:\\Users\\jurep\\.docker'
         DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
     }
@@ -25,30 +25,30 @@ pipeline {
 
         stage('Verificar herramientas') {
             steps {
-                bat 'docker --version'
-                bat 'docker compose version'
+                bat '"%DOCKER_CLI%" --version'
+                bat '"%DOCKER_CLI%" compose version'
             }
         }
 
         stage('Construir imagenes') {
             steps {
-                bat 'docker compose build'
+                bat '"%DOCKER_CLI%" compose build'
             }
         }
 
         stage('Ejecutar pruebas unitarias') {
             steps {
-                bat 'docker compose run --rm --no-deps pedidos python -m unittest discover -s tests -v'
+                bat '"%DOCKER_CLI%" compose run --rm --no-deps pedidos python -m unittest discover -s tests -v'
             }
         }
 
         stage('Validar comunicacion y resultado') {
             steps {
-                bat 'docker compose up -d inventario'
+                bat '"%DOCKER_CLI%" compose up -d inventario'
                 script {
                     def salida = bat(
                         returnStdout: true,
-                        script: 'docker compose run --rm pedidos'
+                        script: '"%DOCKER_CLI%" compose run --rm pedidos'
                     ).trim()
                     echo salida
                     if (!(salida =~ /"total"\s*:\s*189000/)) {
@@ -61,7 +61,7 @@ pipeline {
 
     post {
         always {
-            bat 'docker compose down --remove-orphans'
+            bat '"%DOCKER_CLI%" compose down --remove-orphans'
         }
     }
 }

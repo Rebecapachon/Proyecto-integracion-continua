@@ -14,6 +14,7 @@ pipeline {
         DOCKER_CLI = 'C:\\Users\\jurep\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe'
         DOCKER_CONFIG = 'C:\\Users\\jurep\\.docker'
         DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
+        PATH = "C:\\Users\\jurep\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;${env.PATH}"
     }
 
     stages {

@@ -18,7 +18,6 @@ def main():
 
     print(f"Inventario consultado en el servicio remoto: {url}")
     resultado = calcular_total(datos["pedido"], existencias)
-    resultado["total"] += 1
     print(json.dumps(resultado, ensure_ascii=False, indent=2))
 
 
